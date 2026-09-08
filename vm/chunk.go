@@ -1,6 +1,6 @@
 package vm
 
-type OpCode uint8
+type OpCode = uint8
 
 const (
 	OP_RETURN OpCode = iota
@@ -9,18 +9,18 @@ const (
 type Chunk struct {
 	data []uint8
 }
-func initChunk(cap int) *Chunk {
+func InitChunk(cap int) *Chunk {
 	return &Chunk{
 		data: make([]uint8, 0, cap),
 	}
 }
-func writeChunk(chunk *Chunk, chunkByte uint8) {
+func WriteChunk(chunk *Chunk, chunkByte uint8) {
 	if chunk.data == nil {
 		panic("chunk is not allocated")
 	}
 	chunk.data = append(chunk.data, chunkByte)
 }
-func freeChunk(chunk *Chunk) {
+func FreeChunk(chunk *Chunk) {
 	if chunk.data == nil {
 		panic("chunk is not allocated")
 	}

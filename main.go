@@ -5,9 +5,15 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"pine/vm"
 )
 
 func main() {
+	chunk := vm.InitChunk(5)
+	vm.WriteChunk(chunk, vm.OP_RETURN)
+	vm.DissasembleChunk(chunk, "test chunk")
+	vm.FreeChunk(chunk)
+	
 	args := os.Args[1:]
 	fmt.Println("args:", args)
 	if len(args) > 1 {
@@ -33,15 +39,15 @@ func runPrompt() {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("> ")
-		if scanner.Scan() {
-			input := scanner.Text()
-			if input == "" {
-				break
-			}
-			runCode(input)
-			fmt.Println(input)
+		if !scanner.Scan() {
+			break
 		}
-
+		input := scanner.Text()
+		if input == "" {
+			break
+		}
+		runCode(input)
+		fmt.Println(input)
 	}
 
 }
