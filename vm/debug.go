@@ -7,7 +7,7 @@ import (
 func DissasembleChunk (chunk *Chunk, name string) {
 	fmt.Printf("== %s ==\n", name)
 
-	for offset := 0; offset < len(chunk.data); {
+	for offset := 0; offset < len(chunk.code); {
 		offset = dissasembleInstruction(chunk, offset)
 	}
 	
@@ -15,7 +15,7 @@ func DissasembleChunk (chunk *Chunk, name string) {
 
 func dissasembleInstruction (chunk *Chunk, offset int) int {
 	fmt.Printf("%04d", offset)
-	instruction := chunk.data[offset]
+	instruction := chunk.code[offset]
 	switch instruction {
 		case OP_RETURN:
 			return simpleInstruction("OP_RETURN", offset)

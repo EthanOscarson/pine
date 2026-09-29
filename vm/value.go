@@ -1,9 +1,5 @@
 package vm
 
-import (
-	"slices"
-)
-
 type Value = uint64
 
 type ValueArray struct {
@@ -21,4 +17,9 @@ func (v *ValueArray) write (value Value) error {
 	}
 	v.values = v.values[:n+1]
 	v.values[n] = value
+	return nil;
+}
+
+func (v *ValueArray) free () {
+	v.values = nil
 }
