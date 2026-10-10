@@ -10,6 +10,9 @@ import (
 
 func main() {
 	chunk := vm.InitChunk(5)
+	index := vm.AddConstant(chunk, 12)
+	vm.WriteChunk(chunk, vm.OP_CONSTANT)
+	vm.WriteChunk(chunk, index);
 	vm.WriteChunk(chunk, vm.OP_RETURN)
 	vm.DissasembleChunk(chunk, "test chunk")
 	vm.FreeChunk(chunk)
