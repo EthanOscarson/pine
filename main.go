@@ -5,17 +5,21 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"pine/vm"
+	. "pine/vm"
 )
 
 func main() {
-	chunk := vm.InitChunk(5)
-	index := vm.AddConstant(chunk, 12)
-	vm.WriteChunk(chunk, vm.OP_CONSTANT)
-	vm.WriteChunk(chunk, index);
-	vm.WriteChunk(chunk, vm.OP_RETURN)
-	vm.DissasembleChunk(chunk, "test chunk")
-	vm.FreeChunk(chunk)
+	var v VM;
+	v = v.InitVM();
+	chunk := InitChunk(5)
+	index := AddConstant(chunk, 12)
+	WriteChunk(chunk, OP_CONSTANT)
+	WriteChunk(chunk, index);
+	WriteChunk(chunk, OP_RETURN)
+	v.Interpret(chunk)
+	DissasembleChunk(chunk, "test chunk")
+	FreeChunk(chunk)
+	v.FreeVM()
 	
 	args := os.Args[1:]
 	fmt.Println("args:", args)

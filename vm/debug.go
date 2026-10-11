@@ -1,8 +1,12 @@
 package vm
 
+
 import (
 	"fmt"
 )
+
+const DEBUG = true;
+
 
 func DissasembleChunk (chunk *Chunk, name string) {
 	fmt.Printf("== %s ==\n", name)
@@ -33,12 +37,12 @@ func simpleInstruction(name string, offset int) int {
 }
 
 func printValue(value Value) {
-	fmt.Printf("'%d'", value)
+	fmt.Printf("%d", value)
 }
 
 func constantInstruction(name string, chunk *Chunk, offset int) int {
 	constant := chunk.code[offset +1]
-	fmt.Printf(" %-16s %4d ", name, constant)
+	fmt.Printf(" %-16s %4d=", name, constant)
 	printValue(chunk.constants.values[constant])
 	fmt.Printf("\n")
 	return offset + 2
