@@ -1,17 +1,24 @@
 package vm
 
-type VM struct {
-	chunk *Chunk
-	ip uint8
-}
-
-type InterpretResult = uint8;
 
 const (
 	INTERPRET_OK             InterpretResult = iota
 	INTERPRET_COMPILE_ERROR
 	INTERPRET_RUNTIME_ERROR
 )
+
+type VM struct {
+	chunk *Chunk
+	ip uint8
+	stack [256]Value
+	stackTop uint8
+}
+
+type InterpretResult = uint8;
+
+
+
+
 
 func (vm *VM) InitVM () VM {
 	return VM{}
