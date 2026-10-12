@@ -13,3 +13,6 @@ func (vm *VM) pop () Value {
 	vm.stackTop--
 	return vm.stack[vm.stackTop]
 }
+
+
+

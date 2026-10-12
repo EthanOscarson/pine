@@ -1,5 +1,7 @@
 package vm
 
+import "fmt"
+
 
 const (
 	INTERPRET_OK             InterpretResult = iota
@@ -41,17 +43,35 @@ func (vm *VM) Run () InterpretResult {
 	for {
 		instruction = code[ip]
 		if DEBUG {
+			for i := range vm.stackTop {
+				print("[ ")
+				printValue(vm.stack[i])
+				print(" ]")
+				print("\n")
+			}
+			
 			dissasembleInstruction(vm.chunk, int(ip))
 		}
 		ip++
+
 		switch (instruction) {
 			case OP_CONSTANT: {
+				fmt.Printf("A%d", ip)
 				constant := readByte(code, &ip)
+				fmt.Printf("CONST%d", constant)
 				value := vm.chunk.constants.values[constant]
+				vm.push(value)
 				printValue(value)
 				print("\n")
+				break
+			}
+			case OP_NEGATE: {
+				vm.push(-vm.pop());
+				break
 			}
 			case OP_RETURN: {
+				printValue(vm.pop());
+				print("\n")
 				return INTERPRET_OK;
 			}
 			
@@ -60,6 +80,7 @@ func (vm *VM) Run () InterpretResult {
 }
 
 func readByte (code []uint8, ip *uint8) uint8 {
+	a := code[*ip]
 	*ip++
-	return code[*ip]
+	return a
 } 

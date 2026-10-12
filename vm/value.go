@@ -1,12 +1,12 @@
 package vm
 
-type Value = uint64
+type Value = int64
 
 type ValueArray struct {
 	values []Value
 }
 
-func (v *ValueArray) init (buf []uint64) {
+func (v *ValueArray) init (buf []int64) {
 	v.values = buf
 }
 

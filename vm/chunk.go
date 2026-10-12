@@ -1,10 +1,13 @@
 package vm
 
+import "fmt"
+
 type OpCode = uint8
 
 const (
 	OP_RETURN OpCode = iota
 	OP_CONSTANT
+	OP_NEGATE
 )
 
 // Chunk.code is dynamic currently, should be refactored afterwards as we should know how much code & constants are in a chunk after the preprocess step
@@ -17,7 +20,7 @@ func InitChunk(cap int) *Chunk {
 	c := &Chunk{
 		code: make([]uint8, 0, cap),
 	}
-	c.constants.init(make([]uint64, 0, 255))
+	c.constants.init(make([]int64, 0, 255))
 	return c
 }
 func WriteChunk(chunk *Chunk, chunkByte uint8) {
@@ -31,6 +34,7 @@ func AddConstant(chunk *Chunk, value Value) uint8 {
 	if err != nil {
 		panic("Constant buffer exausted")
 	}
+	fmt.Printf("DEBUG%d", len(chunk.constants.values) -1 )
 	return uint8(len(chunk.constants.values)-1);
 	// temporary panic, we should know constant buffer limit before compilation
 }

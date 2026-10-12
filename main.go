@@ -12,9 +12,11 @@ func main() {
 	var v VM;
 	v = v.InitVM();
 	chunk := InitChunk(5)
-	index := AddConstant(chunk, 12)
+	index := AddConstant(chunk, 22)
+	fmt.Printf("INDEX%d", index)
 	WriteChunk(chunk, OP_CONSTANT)
 	WriteChunk(chunk, index);
+	WriteChunk(chunk, OP_NEGATE)
 	WriteChunk(chunk, OP_RETURN)
 	v.Interpret(chunk)
 	DissasembleChunk(chunk, "test chunk")
