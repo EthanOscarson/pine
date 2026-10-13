@@ -57,7 +57,7 @@ const (
 
 type Token struct {
 	tokenType TokenType
-	lexme string
-	
-	
+	length int
+	start string
+	line int
 }
