@@ -3,10 +3,11 @@ package vm
 import "fmt"
 
 
+type ExecutionResult = uint8;
+
 const (
-	INTERPRET_OK             InterpretResult = iota
-	INTERPRET_COMPILE_ERROR
-	INTERPRET_RUNTIME_ERROR
+	EXECUTION_OK             ExecutionResult = iota
+	EXECUTION_ERROR
 )
 
 type VM struct {
@@ -16,7 +17,6 @@ type VM struct {
 	stackTop uint8
 }
 
-type InterpretResult = uint8;
 
 
 
@@ -30,13 +30,11 @@ func (vm *VM) FreeVM () {
 	
 }
 
-func (vm *VM) Interpret (chunk *Chunk) InterpretResult {
-	vm.chunk = chunk
+func (vm *VM) Reset () {
 	vm.ip = 0
-	return vm.Run();
 }
 
-func (vm *VM) Run () InterpretResult {
+func (vm *VM) Run () ExecutionResult {
 	code := vm.chunk.code
 	ip := vm.ip
 	var instruction uint8
@@ -89,7 +87,7 @@ func (vm *VM) Run () InterpretResult {
 			case OP_RETURN: {
 				printValue(vm.pop());
 				print("\n")
-				return INTERPRET_OK;
+				return EXECUTION_OK;
 			}
 			
 		}

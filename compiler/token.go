@@ -1,4 +1,4 @@
-package lexer
+package compiler
 
 type TokenType uint8
 

@@ -5,57 +5,36 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"pine/compiler"
 	. "pine/vm"
 )
 
 func main() {
 	var v VM;
-	v = v.InitVM();
-	chunk := InitChunk(5)
-	index := AddConstant(chunk, 22)
-	fmt.Printf("INDEX%d", index)
-	WriteChunk(chunk, OP_CONSTANT)
-	WriteChunk(chunk, index);
-	WriteChunk(chunk, OP_NEGATE)
-
-
-	index = AddConstant(chunk, 10)
-	WriteChunk(chunk, OP_CONSTANT)
-	WriteChunk(chunk, index)
-	WriteChunk(chunk, OP_ADD)
-
-	
-	
-	WriteChunk(chunk, OP_RETURN)
-
-	
-	v.Interpret(chunk)
-	DissasembleChunk(chunk, "test chunk")
-	FreeChunk(chunk)
-	v.FreeVM()
-	
+	v = v.InitVM()
 	args := os.Args[1:]
 	fmt.Println("args:", args)
 	if len(args) > 1 {
 		fmt.Println("Unexpected number of args, usage pine [script]")
 	} else if len(args) == 1 {
-		runFile(args[0])
+		runFile(args[0], v)
 	} else {
-		runPrompt()
+		runPrompt(v)
 	}
+	v.FreeVM()
 }
 
-func runFile(filename string) {
+func runFile(filename string, v VM) {
 	fmt.Println(filename)
 	file, err := os.ReadFile(filename)
 	code := string(file)
 	if err != nil {
 		fmt.Errorf("Error reading file")
 	}
-	runCode(code)
+	runCode(code, v)
 }
 
-func runPrompt() {
+func runPrompt(v VM) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("> ")
@@ -66,12 +45,12 @@ func runPrompt() {
 		if input == "" {
 			break
 		}
-		runCode(input)
+		runCode(input, v)
 		fmt.Println(input)
 	}
 
 }
 
-func runCode(code string) {
-
+func runCode(code string, v VM) {
+	compiler.Interpret(code, v)
 }
