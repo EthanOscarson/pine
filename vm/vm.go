@@ -65,6 +65,23 @@ func (vm *VM) Run () InterpretResult {
 				print("\n")
 				break
 			}
+			case OP_ADD: {
+				vm.push(vm.pop() + vm.pop())
+				break
+			}
+			case OP_SUBTRACT: {
+				vm.push(vm.pop() - vm.pop())
+				break
+			}
+			case OP_MULTIPLY: {
+				vm.push(vm.pop() * vm.pop())
+				break
+			}
+			case OP_DIVIDE: {
+				vm.push(vm.pop() / vm.pop())
+				break
+			}
+			
 			case OP_NEGATE: {
 				vm.push(-vm.pop());
 				break

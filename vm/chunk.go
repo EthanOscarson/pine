@@ -7,7 +7,12 @@ type OpCode = uint8
 const (
 	OP_RETURN OpCode = iota
 	OP_CONSTANT
+	OP_ADD
+	OP_SUBTRACT
+	OP_MULTIPLY
+	OP_DIVIDE
 	OP_NEGATE
+	
 )
 
 // Chunk.code is dynamic currently, should be refactored afterwards as we should know how much code & constants are in a chunk after the preprocess step

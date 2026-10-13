@@ -17,7 +17,18 @@ func main() {
 	WriteChunk(chunk, OP_CONSTANT)
 	WriteChunk(chunk, index);
 	WriteChunk(chunk, OP_NEGATE)
+
+
+	index = AddConstant(chunk, 10)
+	WriteChunk(chunk, OP_CONSTANT)
+	WriteChunk(chunk, index)
+	WriteChunk(chunk, OP_ADD)
+
+	
+	
 	WriteChunk(chunk, OP_RETURN)
+
+	
 	v.Interpret(chunk)
 	DissasembleChunk(chunk, "test chunk")
 	FreeChunk(chunk)
