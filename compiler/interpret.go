@@ -11,8 +11,8 @@ const (
 	INTERPRET_COMPILE_ERROR
 	INTERPRET_RUNTIME_ERROR
 )
-
+// Interpret takes the source code and a vm, compiles the source and runs the code
 func Interpret (source string, v vm.VM) InterpretResult {
 	result, bytecode := compile(source)
-	v.Run(bytecode)
+	err := v.Run(bytecode)
 }
